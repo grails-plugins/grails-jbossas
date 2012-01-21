@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<scanning xmlns='urn:jboss:scanning:1.0'>
+	<path name='WEB-INF/lib/grails-datastore-gorm-*.jar'>
+		<include name='org.grails.datastore' />
+	</path>
+</scanning>

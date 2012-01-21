@@ -1,0 +1,8 @@
+<jboss-web>
+	<class-loading java2ClassLoadingCompliance="${java2ClassLoadingCompliance}">
+		<loader-repository>
+			${appname}:loader=${archive}
+			<loader-repository-config>java2ParentDelegation=${java2ParentDelegation}</loader-repository-config>
+		</loader-repository>
+	</class-loading>
+</jboss-web>

@@ -1,0 +1,31 @@
+h1. generate-jboss-deploy
+
+h2. Purpose
+
+Generate deployment descriptor(s) for the specified version of JBoss.
+
+h2. Description
+
+Usage:
+{code:java}
+grails generate-jboss-deploy <version>
+{code}
+
+Examples:
+
+Generate @WEB-INF/jboss-web.xml@ for JBoss 5:
+
+{code:java}
+grails generate-jboss-deploy 5
+{code}
+
+Generate @WEB-INF/jboss-classloading.xml@ and @WEB-INF/jboss-scanning.xml@ for JBoss 6:
+
+{code:java}
+grails generate-jboss-deploy 6
+{code}
+
+Required arguments:
+* @version@ - The major version of JBoss, either 5 or 6
+
+Optional arguments: _none_ .
