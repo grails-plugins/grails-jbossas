@@ -1,0 +1,60 @@
+The first step is to install the plugin, either as a dependency in BuildConfig.groovy:
+
+{code}
+plugins {
+   // open-ended syntax supported in Grails 2.0+
+   build ':jbossas:[1.0,)'
+
+   // or fixed version for pre-2.0
+   //build ':jbossas:1.0'
+}
+{code}
+
+or with install-plugin
+
+{code}
+grails install-plugin jbossas
+{code}
+
+h4. Log4j
+
+JBoss configures Log4j and it can conflict with the Grails configuration and jars, so the plugin supports deleting conflicting jars and removing the autoconfiguration that Grails puts in @web.xml@. You can configure whether these features are enabled and which jars to delete with the configuration options described below.
+
+h4. Hibernate
+
+The Hibernate jars that JBoss uses can conflict with the ones Grails supplies, and this can cause the error @java.lang.NoSuchMethodException: org.hibernate.validator.ClassValidator.<init>@. To work around this you can configure two properties in DataSource.groovy:
+
+{code}
+hibernate {
+   validator.apply_to_ddl = false
+   validator.autoregister_listeners = false
+}
+{code}
+
+but the plugin will do this for you programmatically when deploying unless you disable it with the @grails.plugin.jbossas.fixHibernateValidator@ option.
+
+h4. Templates
+
+The plugin uses template files in its src/templates directory to generate the various descriptor files with the [generate-jboss-deploy|Scripts] script. You can use your own with the @grails.plugin.jbossas.templates@ property, e.g.
+
+{code}
+grails.plugin.jbossas.templates = [
+   'jboss-web-5.xml':          'path/to/my-jboss-web-5.xml',
+   'jboss-classloading-6.xml': 'path/to/my-jboss-classloading-6.xml',
+   'jboss-scanning-6.xml':     'path/to/my-jboss-scanning-6.xml']
+{code}
+
+The key @jboss-web-5.xml@ is used to generate the @WEB-INF/jboss-web.xml@ file for JBoss 5 and the keys @jboss-classloading-6.xml@ and @jboss-scanning-6.xml@ are used to generate the @WEB-INF/jboss-classloading.xml@ and @WEB-INF/jboss-scanning.xml@ files for JBoss 6.
+
+h4. Configuration
+
+There are a few configuration options for the plugin, specified in Config.groovy:
+
+{table}
+*Property* | *Default* | *Meaning*
+grails.plugin.jbossas.fixHibernateValidator | @true@  | configure the @hibernate.validator.apply_to_ddl@ and @hibernate.validator.autoregister_listeners@ properties if @true@
+grails.plugin.jbossas.removeLog4jWebxml | @true@  | remove the @Log4jConfigListener@ listener element from web.xml if @true@
+grails.plugin.jbossas.removeLog4jJars | @true@  | remove the various Log4j-related jar files from the war if @true@
+grails.plugin.jbossas.deleteJarPatterns | @\['log4j*', 'slf4j*', 'jcl-over-slf4j*', 'jul-to-slf4j*'\]@  | jar file name patterns to be removed if @grails.plugin.jbossas.removeLog4jJars@ is @true@
+grails.plugin.jbossas.templates | none | path overrides for the templates used to generate deployment file templates
+{table}
