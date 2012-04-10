@@ -33,6 +33,24 @@ hibernate {
 
 but the plugin will do this for you programmatically when deploying unless you disable it with the @grails.plugin.jbossas.fixHibernateValidator@ option.
 
+h4. generate-jboss-deploy script
+
+After installing the plugin you need to run the [generate-jboss-deploy|Scripts] script, passing in the major version of JBoss that you're using, i.e.
+
+{code}
+grails generate-jboss-deploy 5
+{code}
+
+or
+
+{code}
+grails generate-jboss-deploy 6
+{code}
+
+This will generate the appropriate deployment descriptors for your version of JBoss (jboss-web.xml, jboss-classloading.xml, and/or jboss-scanning.xml).
+
+In addition there is code in the plugin's _Events.groovy script that fires when a war is built.
+
 h4. Templates
 
 The plugin uses template files in its src/templates directory to generate the various descriptor files with the [generate-jboss-deploy|Scripts] script. You can use your own with the @grails.plugin.jbossas.templates@ property, e.g.
